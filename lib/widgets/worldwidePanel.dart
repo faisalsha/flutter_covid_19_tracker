@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class WorldwidePanel extends StatelessWidget {
   final Map worldData;
 
-  const WorldwidePanel({this.worldData});
+  const WorldwidePanel({Key key, this.worldData}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -11,32 +12,32 @@ class WorldwidePanel extends StatelessWidget {
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            childAspectRatio: 2, crossAxisCount: 2),
-        children: [
+            crossAxisCount: 2, childAspectRatio: 2),
+        children: <Widget>[
           StatusPanel(
+            title: 'CONFIRMED',
             panelColor: Colors.red[100],
             textColor: Colors.red,
-            title: 'CONFIRMED',
-            count: worldData['updated'].toString(),
+            count: worldData['cases'].toString(),
           ),
           StatusPanel(
+            title: 'ACTIVE',
             panelColor: Colors.blue[100],
             textColor: Colors.blue[900],
-            title: 'ACTIVE',
             count: worldData['active'].toString(),
           ),
           StatusPanel(
-            panelColor: Colors.grey[400],
-            textColor: Colors.grey[900],
-            title: 'DEATHS',
-            count: worldData['deaths'].toString(),
-          ),
-          StatusPanel(
+            title: 'RECOVERED',
             panelColor: Colors.green[100],
             textColor: Colors.green,
-            title: 'RECOVERED',
             count: worldData['recovered'].toString(),
-          )
+          ),
+          StatusPanel(
+            title: 'DEATHS',
+            panelColor: Colors.grey[400],
+            textColor: Colors.grey[900],
+            count: worldData['deaths'].toString(),
+          ),
         ],
       ),
     );
@@ -49,27 +50,31 @@ class StatusPanel extends StatelessWidget {
   final String title;
   final String count;
 
-  const StatusPanel({this.panelColor, this.textColor, this.title, this.count});
+  const StatusPanel(
+      {Key key, this.panelColor, this.textColor, this.title, this.count})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+
     return Container(
-      margin: EdgeInsets.all(8),
-      color: panelColor,
+      margin: EdgeInsets.all(10),
       height: 80,
       width: width / 2,
+      color: panelColor,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: <Widget>[
           Text(
             title,
             style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 16.0, color: textColor),
+                fontWeight: FontWeight.bold, fontSize: 16, color: textColor),
           ),
           Text(
             count,
             style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 16.0, color: textColor),
+                fontSize: 16, fontWeight: FontWeight.bold, color: textColor),
           )
         ],
       ),

@@ -1,9 +1,13 @@
-import 'package:covid_19_tracker/datasorce.dart';
+import 'package:covid_19_tracker/Screens/countryPage.dart';
+
+import 'package:covid_19_tracker/widgets/infoPanel.dart';
 import 'package:covid_19_tracker/widgets/mostAffectedcountries.dart';
-import 'package:covid_19_tracker/widgets/worldwidepanel.dart';
+import 'package:covid_19_tracker/widgets/worldwidePanel.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
+import '../datasource.dart';
 
 class Homepage extends StatefulWidget {
   @override
@@ -68,17 +72,25 @@ class _HomepageState extends State<Homepage> {
                     'Worldwide',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  Container(
-                    padding: EdgeInsets.all(8.0),
-                    decoration: BoxDecoration(
-                        color: primaryBlack,
-                        borderRadius: BorderRadius.circular(15.0)),
-                    child: Text(
-                      'Regional',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return CountryPage();
+                      }));
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                          color: primaryBlack,
+                          borderRadius: BorderRadius.circular(15.0)),
+                      child: Text(
+                        'Regional',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ],
@@ -104,7 +116,20 @@ class _HomepageState extends State<Homepage> {
                 ? Container()
                 : MostAffectedPanel(
                     countryData: countryData,
-                  )
+                  ),
+            InfoPanel(),
+            SizedBox(
+              height: 20.0,
+            ),
+            Center(
+              child: Text(
+                'We Are Together In The Fight!',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            SizedBox(
+              height: 40.0,
+            )
           ],
         ),
       ),
